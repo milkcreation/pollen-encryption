@@ -17,19 +17,24 @@ composer require pollen-solutions/encryption
 ```php
 use Pollen\Encryption\Encrypter;
 
-// Cypher asn Key definition
+// Cypher (AES-128-CBC|AES-256-CBC) and Key definitions
 $cypher = 'AES-128-CBC';
 $key = Encrypter::generateKey($cypher);
 
 // Encrypter instanciation
 $encrypter = new Encrypter($key, $cypher);
 
+// To encrypt
+$toEncrypt = 'toEncrypt';
+
 // Encrypt
-$encrypted = $encrypter->encrypt('Test');
+$encrypted = $encrypter->encrypt($toEncrypt);
+var_dump('encrypted string : ' . $encrypted);
+// >> eyJpdiI6ImwxcmNicytwcVpkZmdsem4zTEpROVE9PSIsInZhbHVlIjoiK0JTN2EzWFVFazJoYi9abk1maW4vZz09IiwibWFjIjoiNDFiMzNlNzJkZjQxNGNhNmQyYmQ3MmViYjc0MTMyNmZiOTJmZTdlNDNmZmZiZGM3NzE1ZTc5YzE3YjIyZGQwZCJ9 
 
 // Décrypt
 $decrypted = $encrypter->decrypt($encrypted);
-
-echo $decrypted;
+var_dump('decrypted string : ' . $decrypted);
+// >> toEncrypt
 
 ```
