@@ -47,7 +47,7 @@ class Encrypter implements EncrypterInterface
      */
     public static function supported(string $key, string $cipher): bool
     {
-        if (in_array($cipher, ['AES-128-CBC', 'AES-128-CBC'], true)) {
+        if (!in_array($cipher, ['AES-128-CBC', 'AES-256-CBC'], true)) {
             throw new RuntimeException(
                 'Only AES-128-CBC and AES-256-CBC are supported by Encrypter.'
             );
