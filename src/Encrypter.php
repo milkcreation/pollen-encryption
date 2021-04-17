@@ -5,10 +5,17 @@ declare(strict_types=1);
 namespace Pollen\Encryption;
 
 use Exception;
+use Pollen\Support\Exception\ManagerRuntimeException;
 use RuntimeException;
 
 class Encrypter implements EncrypterInterface
 {
+    /**
+     * Instance principale.
+     * @var static|null
+     */
+    private static $instance;
+
     /**
      * Clé secrète de hachage.
      * @var string
@@ -35,6 +42,23 @@ class Encrypter implements EncrypterInterface
                 'Encrypter only supports AES-128-CBC and AES-256-CBC cyphers with the correct key lengths'
             );
         }
+
+        if (!self::$instance instanceof static) {
+            self::$instance = $this;
+        }
+    }
+
+    /**
+     * Récupération de l'instance principale.
+     *
+     * @return static
+     */
+    public static function getInstance(): EncrypterInterface
+    {
+        if (self::$instance instanceof self) {
+            return self::$instance;
+        }
+        throw new ManagerRuntimeException(sprintf('Unavailable [%s] instance', __CLASS__));
     }
 
     /**
@@ -62,7 +86,7 @@ class Encrypter implements EncrypterInterface
     /**
      * Création d'une clé de hachage
      *
-     * @param  string $cipher AES-128-CBC|AES-256-CBC
+     * @param string $cipher AES-128-CBC|AES-256-CBC
      *
      * @return string
      */

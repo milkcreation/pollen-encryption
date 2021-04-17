@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pollen\Encryption;
 
 use Pollen\Container\BaseServiceProvider;
+use Pollen\Support\Env;
 
 class EncryptionServiceProvider extends BaseServiceProvider
 {
@@ -21,8 +22,8 @@ class EncryptionServiceProvider extends BaseServiceProvider
     public function register(): void
     {
         $this->getContainer()->share(EncrypterInterface::class, function () {
-            $cipher = 'AES-128-CBC';
-            $key = Encrypter::generateKey($cipher);
+            $cipher = Env::get('APP_CIPHER', 'AES-256-CBC');
+            $key = Env::get('APP_KEY', Encrypter::generateKey($cipher));
 
             return new Encrypter($key, $cipher);
         });
