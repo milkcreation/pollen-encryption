@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pollen\Encryption;
 
-use Pollen\Support\StaticProxy;
+use Pollen\Support\ProxyResolver;
 use RuntimeException;
 
 /**
@@ -29,7 +29,7 @@ trait EncrypterProxy
             try {
                 $this->encrypter = Encrypter::getInstance();
             } catch (RuntimeException $e) {
-                $this->encrypter = StaticProxy::getProxyInstance(
+                $this->encrypter = ProxyResolver::getInstance(
                     EncrypterInterface::class,
                     null,
                     method_exists($this, 'getContainer') ? $this->getContainer() : null
