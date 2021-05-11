@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Pollen\Encryption;
 
-use Pollen\Container\BaseServiceProvider;
+use Pollen\Container\BootableServiceProvider;
 use Pollen\Support\Env;
 
-class EncryptionServiceProvider extends BaseServiceProvider
+class EncryptionServiceProvider extends BootableServiceProvider
 {
     /**
      * @var string[]
